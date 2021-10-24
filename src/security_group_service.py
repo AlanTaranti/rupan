@@ -20,8 +20,8 @@ class SecurityGroupService:
 
         for module_config in self.modules_config:
             module_name = module_config["module"]
-            module = importlib.import_module(".modules.{}".format(module_name), 'src')
-            module_dict[module_name] = getattr(module, module_config['class'])
+            module = importlib.import_module(".modules.{}".format(module_name), "src")
+            module_dict[module_name] = getattr(module, module_config["class"])
 
         return module_dict
 
@@ -30,5 +30,5 @@ class SecurityGroupService:
         for module_name, module_class in self.modules.items():
             module_instance = module_class()
             security_groups[module_name] = module_instance.get_segurity_groups()
- 
+
         return security_groups

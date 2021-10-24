@@ -9,4 +9,4 @@ class Ec2(BaseModule):
         return boto3.client("ec2")
 
     def get_segurity_groups(self) -> List:
-        return self.client.describe_security_groups()['SecurityGroups']
+        return self.client.describe_security_groups()["SecurityGroups"]
