@@ -1,41 +1,21 @@
 from typing import List, Dict
-import importlib
 
 from .modules.base import BaseModule
+from .modules.ec2 import Ec2
+from .modules.rds import Rds
+from .modules.redshift import Redshift
+from .modules.elasticache import Elasticache
 
 
 class SecurityGroupService:
     @property
-    def modules_config(self) -> List[Dict[str, str]]:
-        return [
-            {
-                "module": "ec2",
-                "class": "Ec2",
-            },
-            {
-                "module": "rds",
-                "class": "Rds",
-            },
-            {
-                "module": "redshift",
-                "class": "Redshift",
-            },
-            {
-                "module": "elasticache",
-                "class": "Elasticache",
-            },
-        ]
-
-    @property
     def modules(self) -> Dict[str, BaseModule]:
-        module_dict = {}
-
-        for module_config in self.modules_config:
-            module_name = module_config["module"]
-            module = importlib.import_module(".modules.{}".format(module_name), "src")
-            module_dict[module_name] = getattr(module, module_config["class"])
-
-        return module_dict
+        return {
+            "ec2": Ec2,
+            "rds": Rds,
+            "redshift": Redshift,
+            "elasticache": Elasticache,
+        }
 
     def get_security_groups(self) -> List:
         security_groups = {}
