@@ -12,8 +12,10 @@ class Redshift(BaseModule):
         return boto3.client("redshift")
 
     def get_segurity_groups(self) -> List[ClusterSecurityGroup]:
-        try: 
-            return self.client.describe_cluster_security_groups()["ClusterSecurityGroups"]
+        try:
+            return self.client.describe_cluster_security_groups()[
+                "ClusterSecurityGroups"
+            ]
         except ClientError:
             # Clientes VPC-by-Default não podem usar Grupos de Segurança no Redshift
             return []
