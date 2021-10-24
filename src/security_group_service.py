@@ -8,7 +8,7 @@ class SecurityGroupService:
     @property
     def modules(self) -> Dict[str, BaseModule]:
         return {
-            "ec2": Ec2,
+            "security-groups": Ec2,
         }
 
     def get_security_groups(self) -> List:
