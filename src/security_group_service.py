@@ -16,6 +16,10 @@ class SecurityGroupService:
                 "module": "rds",
                 "class": "Rds",
             },
+            {
+                "module": "redshift",
+                "class": "Redshift",
+            },
         ]
 
     @property
