@@ -3,14 +3,13 @@ from src.security_group_service import SecurityGroupService
 
 
 def AwsSgExtractor():
+    """
+    Um simples extrator de Security Groups da AWS
+    """
     service = SecurityGroupService()
 
     return service.get_security_groups()
 
 
-def main():
-    fire.Fire(AwsSgExtractor)
-
-
 if __name__ == "__main__":
-    main()
+    fire.Fire(AwsSgExtractor)
