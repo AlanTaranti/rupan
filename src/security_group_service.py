@@ -20,6 +20,10 @@ class SecurityGroupService:
                 "module": "redshift",
                 "class": "Redshift",
             },
+            {
+                "module": "elasticache",
+                "class": "Elasticache",
+            },
         ]
 
     @property
