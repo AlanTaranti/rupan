@@ -1,4 +1,6 @@
 import fire
+import pandas as pd
+
 from src.security_group_service import SecurityGroupService
 
 
@@ -8,7 +10,10 @@ def AwsSgExtractor():
     """
     service = SecurityGroupService()
 
-    return service.get_security_groups()
+    security_groups = service.get_security_groups()
+    dataframe = pd.DataFrame(security_groups)
+
+    dataframe.to_csv("security_groups.csv")
 
 
 if __name__ == "__main__":
