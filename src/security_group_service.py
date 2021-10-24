@@ -11,7 +11,11 @@ class SecurityGroupService:
             {
                 "module": "ec2",
                 "class": "Ec2",
-            }
+            },
+            {
+                "module": "rds",
+                "class": "Rds",
+            },
         ]
 
     @property
