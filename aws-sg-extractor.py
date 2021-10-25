@@ -46,7 +46,7 @@ def aws_sg_extractor():
         name = security_group["GroupName"]
         filename = "{}.xlsx".format(name)
 
-        ## Metadados
+        # Metadados
         metadata = {
             "group_name": security_group["GroupName"],
             "owner_id": security_group["OwnerId"],
@@ -56,11 +56,11 @@ def aws_sg_extractor():
         }
         metadata = pd.DataFrame([metadata])
 
-        ## Ip Permissions
+        # Ip Permissions
         ip_permissions_inbound = pd.DataFrame(security_group["IpPermissions"])
         ip_permissions_inbound = ip_permissions_formatter(ip_permissions_inbound)
 
-        ## Ip Permissions Egress
+        # Ip Permissions Egress
         ip_permissions_outbound = pd.DataFrame(security_group["IpPermissionsEgress"])
         ip_permissions_outbound = ip_permissions_formatter(ip_permissions_outbound)
 
