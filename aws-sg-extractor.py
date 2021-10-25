@@ -32,13 +32,13 @@ def ip_permissions_formatter(ip_permissions: pd.DataFrame) -> pd.DataFrame:
     return ip_permissions
 
 
-def aws_sg_extractor():
+def aws_sg_extractor(profile: str = "default"):
     """
     Um simples extrator de Security Groups da AWS
     """
 
     # Obter os security groups
-    service = SecurityGroupService()
+    service = SecurityGroupService(profile=profile)
     security_groups = service.get_security_groups()
 
     # tratar os security groups
