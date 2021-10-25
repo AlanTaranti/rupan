@@ -75,4 +75,4 @@ def aws_sg_extractor():
 
 
 if __name__ == "__main__":
-    fire.Fire(AwsSgExtractor)
+    fire.Fire(aws_sg_extractor)
