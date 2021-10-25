@@ -19,12 +19,38 @@ pip install -r requirements.txt
 ```
 
 ### Configuração
+Nesse passo, é necessário configurar os usuário IAM que serão utilizados pela aplicação.
+Tenha em mãos o AWS ACCESS KEY e o AWS SECRET KEY do usuário.
+
+#### Adicionar o profile default
+
+Você pode adicionar o profile default (padrão) com o comando abaixo.
+Esse profile default, é usado pelo script quando não é especificado nenhum profile na execução.
 
 ```
 aws configure
 ```
 
+### Adicionar profile extras
+Caso queira utilizar mais de um profile, basta executar o comando abaixo, substituindo PROFILE pelo nome do profile desejado.
+
+```
+aws configure --profile PROFILE
+```
+
 ### Executando
+
+Para executar o script com o profile default, basta executar o seguinte comando.
 ```
 python3 aws-sg-extractor.py
+```
+
+Para executar o script com o profile desejado, basta executar o seguinte comando.
+```
+python3 aws-sg-extractor.py --profile PROFILE
+```
+
+Caso queira ver a ajuda do comando, basta executar:
+```
+python3 aws-sg-extractor.py --help
 ```
