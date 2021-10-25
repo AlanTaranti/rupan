@@ -32,7 +32,7 @@ def ip_permissions_formatter(ip_permissions: pd.DataFrame) -> pd.DataFrame:
     return ip_permissions
 
 
-def AwsSgExtractor():
+def aws_sg_extractor():
     """
     Um simples extrator de Security Groups da AWS
     """
