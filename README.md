@@ -19,6 +19,8 @@ pip install -r requirements.txt
 ```
 
 ### Configuração
+Com o AWS CLI instalado, podemos seguir com a configuração.
+
 Nesse passo, é necessário configurar os usuário IAM que serão utilizados pela aplicação.
 Tenha em mãos o AWS ACCESS KEY e o AWS SECRET KEY do usuário.
 
