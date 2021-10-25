@@ -1,3 +1,5 @@
+import os
+
 import fire
 import pandas as pd
 
@@ -41,10 +43,15 @@ def aws_sg_extractor(profile: str = "default"):
     service = SecurityGroupService(profile=profile)
     security_groups = service.get_security_groups()
 
+    # Criar diretorio de saida de arquivos
+    base_dir = os.path.join("output", profile)
+    os.makedirs(base_dir, exist_ok=True)
+
     # tratar os security groups
     for security_group in security_groups:
         name = security_group["GroupName"]
         filename = "{}.xlsx".format(name)
+        filepath = os.path.join(base_dir, filename)
 
         # Metadados
         metadata = {
@@ -64,7 +71,7 @@ def aws_sg_extractor(profile: str = "default"):
         ip_permissions_outbound = pd.DataFrame(security_group["IpPermissionsEgress"])
         ip_permissions_outbound = ip_permissions_formatter(ip_permissions_outbound)
 
-        with pd.ExcelWriter(filename, mode="w") as writer:
+        with pd.ExcelWriter(filepath, mode="w") as writer:
             metadata.to_excel(writer, "metadata", index=False)
             ip_permissions_inbound.to_excel(
                 writer, "ip_permissions_inbound", index=False
