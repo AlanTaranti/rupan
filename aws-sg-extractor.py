@@ -4,6 +4,34 @@ import pandas as pd
 from src.security_group_service import SecurityGroupService
 
 
+def ip_permissions_formatter(ip_permissions: pd.DataFrame) -> pd.DataFrame:
+    ip_permissions = ip_permissions.rename(
+        columns={
+            "FromPort": "from_port",
+            "IpProtocol": "ip_protocol",
+            "IpRanges": "ipv4_ranges",
+            "Ipv6Ranges": "ipv6_ranges",
+            "PrefixListIds": "prefix_list_ids",
+            "ToPort": "to_port",
+            "UserIdGroupPairs": "user_id_group_pairs",
+        }
+    )
+
+    columns = [
+        "ip_protocol",
+        "from_port",
+        "to_port",
+        "ipv4_ranges",
+        "ipv6_ranges",
+        "prefix_list_ids",
+        "user_id_group_pairs",
+    ]
+
+    ip_permissions = ip_permissions.reindex(columns=columns)
+
+    return ip_permissions
+
+
 def AwsSgExtractor():
     """
     Um simples extrator de Security Groups da AWS
@@ -29,15 +57,19 @@ def AwsSgExtractor():
         metadata = pd.DataFrame([metadata])
 
         ## Ip Permissions
-        ip_permissions = pd.DataFrame(security_group["IpPermissions"])
+        ip_permissions_inbound = pd.DataFrame(security_group["IpPermissions"])
+        ip_permissions_inbound = ip_permissions_formatter(ip_permissions_inbound)
 
         ## Ip Permissions Egress
-        ip_permissions_egress = pd.DataFrame(security_group["IpPermissionsEgress"])
+        ip_permissions_outbound = pd.DataFrame(security_group["IpPermissionsEgress"])
+        ip_permissions_outbound = ip_permissions_formatter(ip_permissions_outbound)
 
         with pd.ExcelWriter(filename, mode="w") as writer:
             metadata.to_excel(writer, "metadata", index=False)
-            ip_permissions.to_excel(writer, "ip_permissions_inbound", index=False)
-            ip_permissions_egress.to_excel(
+            ip_permissions_inbound.to_excel(
+                writer, "ip_permissions_inbound", index=False
+            )
+            ip_permissions_outbound.to_excel(
                 writer, "ip_permissions_outbound", index=False
             )
 
