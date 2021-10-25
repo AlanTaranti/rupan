@@ -1,5 +1,7 @@
 from typing import List
 
+from botocore.exceptions import ClientError
+
 from .modules.ec2 import Ec2
 
 
@@ -8,4 +10,7 @@ class SecurityGroupService:
         self.profile = profile
 
     def get_security_groups(self) -> List:
-        return Ec2(self.profile).get_segurity_groups()
+        try:
+            return Ec2(self.profile).get_segurity_groups()
+        except ClientError as error:
+            exit(error)

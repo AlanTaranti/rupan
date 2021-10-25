@@ -1,6 +1,7 @@
 from typing import List
 
 import boto3
+from botocore.exceptions import ProfileNotFound
 
 
 class BaseModule:
@@ -9,7 +10,10 @@ class BaseModule:
 
     @property
     def session(self):
-        return boto3.Session(profile_name=self.profile)
+        try:
+            return boto3.Session(profile_name=self.profile)
+        except ProfileNotFound:
+            exit("Perfil {}, não encontrado!".format(self.profile))
 
     def get_segurity_groups(self) -> List:
         raise NotImplementedError()
