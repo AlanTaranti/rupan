@@ -8,26 +8,36 @@ from src.security_group_service import SecurityGroupService
 
 
 def ip_permissions_formatter(ip_permissions: pd.DataFrame, prefix) -> pd.DataFrame:
+    columns_dict = {
+        "from_port": "{}_from_port".format(prefix),
+        "ip_protocol": "{}_ip_protocol".format(prefix),
+        "ipv4_ranges": "{}_ipv4_ranges".format(prefix),
+        "ipv6_ranges": "{}_ipv6_ranges".format(prefix),
+        "prefix_list_ids": "{}_prefix_list_ids".format(prefix),
+        "to_port": "{}_to_port".format(prefix),
+        "user_id_group_pairs": "{}_user_id_group_pairs".format(prefix),
+    }
+
     ip_permissions = ip_permissions.rename(
         columns={
-            "FromPort": "{}_from_port".format(prefix),
-            "IpProtocol": "{}_ip_protocol".format(prefix),
-            "IpRanges": "{}_ipv4_ranges".format(prefix),
-            "Ipv6Ranges": "{}_ipv6_ranges".format(prefix),
-            "PrefixListIds": "{}_prefix_list_ids".format(prefix),
-            "ToPort": "{}_to_port".format(prefix),
-            "UserIdGroupPairs": "{}_user_id_group_pairs".format(prefix),
+            "FromPort": columns_dict["from_port"],
+            "IpProtocol": columns_dict["ip_protocol"],
+            "IpRanges": columns_dict["ipv4_ranges"],
+            "Ipv6Ranges": columns_dict["ipv6_ranges"],
+            "PrefixListIds": columns_dict["prefix_list_ids"],
+            "ToPort": columns_dict["to_port"],
+            "UserIdGroupPairs": columns_dict["user_id_group_pairs"],
         }
     )
 
     columns = [
-        "{}_ip_protocol".format(prefix),
-        "{}_from_port".format(prefix),
-        "{}_to_port".format(prefix),
-        "{}_ipv4_ranges".format(prefix),
-        "{}_ipv6_ranges".format(prefix),
-        "{}_prefix_list_ids".format(prefix),
-        "{}_user_id_group_pairs".format(prefix),
+        columns_dict["ip_protocol"],
+        columns_dict["from_port"],
+        columns_dict["to_port"],
+        columns_dict["ipv4_ranges"],
+        columns_dict["ipv6_ranges"],
+        columns_dict["prefix_list_ids"],
+        columns_dict["user_id_group_pairs"],
     ]
 
     ip_permissions = ip_permissions.reindex(columns=columns)
