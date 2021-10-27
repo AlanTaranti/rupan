@@ -42,6 +42,9 @@ def ip_permissions_formatter(ip_permissions: pd.DataFrame, prefix) -> pd.DataFra
 
     ip_permissions = ip_permissions.reindex(columns=columns)
 
+    ip_permissions[columns_dict["from_port"]] = ip_permissions[columns_dict["from_port"]].astype('Int64')
+    ip_permissions[columns_dict["to_port"]] = ip_permissions[columns_dict["to_port"]].astype('Int64')
+
     return ip_permissions
 
 
