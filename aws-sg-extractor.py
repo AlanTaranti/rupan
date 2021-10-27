@@ -22,7 +22,7 @@ def ip_permissions_formatter(ip_permissions: pd.DataFrame, prefix) -> pd.DataFra
 
     columns = [
         "{}_ip_protocol".format(prefix),
-        "{}_to_port".format(prefix),
+        "{}_from_port".format(prefix),
         "{}_to_port".format(prefix),
         "{}_ipv4_ranges".format(prefix),
         "{}_ipv6_ranges".format(prefix),
