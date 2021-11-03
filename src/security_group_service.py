@@ -4,6 +4,7 @@ from collections import OrderedDict
 from botocore.exceptions import ClientError
 import pandas as pd
 
+from .repository.sts_repository import StsRepository
 from .repository.ec2 import Ec2
 
 
@@ -64,6 +65,8 @@ class SecurityGroupService:
 
     def to_pandas(self) -> pd.DataFrame:
         security_groups = self.get_security_groups()
+        sts_service = StsRepository()
+        account_id = sts_service.get_account_id()
 
         dataframes = []
         # tratar os security groups
@@ -105,5 +108,7 @@ class SecurityGroupService:
             dataframes.append(dataframe)
 
         dataframes = pd.concat(dataframes)
+        dataframes.insert(0, "region_name", region_name)
+        dataframes.insert(0, "account_id", account_id)
 
         return dataframes
