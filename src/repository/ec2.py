@@ -1,6 +1,6 @@
 from typing import List
 
-from .base import BaseRepository
+from .base_repository import BaseRepository
 
 
 class Ec2(BaseRepository):
