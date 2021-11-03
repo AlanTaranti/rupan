@@ -10,3 +10,8 @@ class Ec2(BaseRepository):
 
     def get_segurity_groups(self) -> List:
         return self.client.describe_security_groups()["SecurityGroups"]
+
+    def get_regions(self):
+        regions_dict_list = self.client.describe_regions()["Regions"]
+        regions = [region["RegionName"] for region in regions_dict_list]
+        return regions
