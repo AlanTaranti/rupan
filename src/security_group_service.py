@@ -57,16 +57,30 @@ class SecurityGroupService:
     def __init__(self, profile):
         self.profile = profile
 
-    def get_security_groups(self) -> List:
+    def get_security_groups(self, region_name: str = None) -> List:
         try:
-            return Ec2(self.profile).get_segurity_groups()
+            return Ec2(self.profile, region_name).get_segurity_groups()
+        except ClientError as error:
+            exit(error)
+
+    def get_regions(self) -> List:
+        try:
+            return Ec2(self.profile).get_regions()
         except ClientError as error:
             exit(error)
 
     def to_pandas(self) -> pd.DataFrame:
-        security_groups = self.get_security_groups()
-        sts_service = StsRepository()
-        account_id = sts_service.get_account_id()
+        regions = self.get_regions()
+
+        dataframes = []
+        for region in regions:
+            dataframes.append(self.to_pandas_region(region))
+
+        dataframes = pd.concat(dataframes)
+        return dataframes
+
+    def to_pandas_region(self, region_name: str = None) -> pd.DataFrame:
+        security_groups = self.get_security_groups(region_name)
 
         dataframes = []
         # tratar os security groups
@@ -75,8 +89,8 @@ class SecurityGroupService:
             # Metadados
             metadata = OrderedDict(
                 {
+                    "account_id": security_group["OwnerId"],
                     "group_name": security_group["GroupName"],
-                    "owner_id": security_group["OwnerId"],
                     "group_id": security_group["GroupId"],
                     "vpc_id": security_group["VpcId"],
                     "description": security_group["Description"],
@@ -108,6 +122,6 @@ class SecurityGroupService:
             dataframes.append(dataframe)
 
         dataframes = pd.concat(dataframes)
-        dataframes.insert(0, "account_id", account_id)
+        dataframes.insert(1, "region_name", region_name)
 
         return dataframes
