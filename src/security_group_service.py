@@ -108,7 +108,6 @@ class SecurityGroupService:
             dataframes.append(dataframe)
 
         dataframes = pd.concat(dataframes)
-        dataframes.insert(0, "region_name", region_name)
         dataframes.insert(0, "account_id", account_id)
 
         return dataframes
