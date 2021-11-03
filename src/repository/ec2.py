@@ -1,9 +1,9 @@
 from typing import List
 
-from .base import BaseModule
+from .base import BaseRepository
 
 
-class Ec2(BaseModule):
+class Ec2(BaseRepository):
     @property
     def client(self):
         return self.session.client("ec2")

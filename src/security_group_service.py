@@ -4,7 +4,7 @@ from collections import OrderedDict
 from botocore.exceptions import ClientError
 import pandas as pd
 
-from .modules.ec2 import Ec2
+from .repository.ec2 import Ec2
 
 
 def ip_permissions_formatter(ip_permissions: pd.DataFrame, prefix) -> pd.DataFrame:
