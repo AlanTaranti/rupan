@@ -4,7 +4,6 @@ from collections import OrderedDict
 from botocore.exceptions import ClientError
 import pandas as pd
 
-from .repository.sts_repository import StsRepository
 from .repository.ec2 import Ec2
 
 
