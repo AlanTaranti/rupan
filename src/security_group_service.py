@@ -53,18 +53,15 @@ def ip_permissions_formatter(ip_permissions: pd.DataFrame, prefix) -> pd.DataFra
 
 
 class SecurityGroupService:
-    def __init__(self, profile):
-        self.profile = profile
-
     def get_security_groups(self, region_name: str = None) -> List:
         try:
-            return Ec2(self.profile, region_name).get_segurity_groups()
+            return Ec2(region_name).get_segurity_groups()
         except ClientError as error:
             exit(error)
 
     def get_regions(self) -> List:
         try:
-            return Ec2(self.profile).get_regions()
+            return Ec2().get_regions()
         except ClientError as error:
             exit(error)
 
