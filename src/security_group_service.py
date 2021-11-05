@@ -90,11 +90,11 @@ class SecurityGroupService:
             # Metadados
             metadata = OrderedDict(
                 {
-                    "account_id": security_group["OwnerId"],
-                    "group_name": security_group["GroupName"],
-                    "group_id": security_group["GroupId"],
-                    "vpc_id": security_group["VpcId"],
-                    "description": security_group["Description"],
+                    "account_id": security_group.get("OwnerId"),
+                    "group_name": security_group.get("GroupName"),
+                    "group_id": security_group.get("GroupId"),
+                    "vpc_id": security_group.get("VpcId"),
+                    "description": security_group.get("Description"),
                 }
             )
             metadata = OrderedDict(reversed(list(metadata.items())))
