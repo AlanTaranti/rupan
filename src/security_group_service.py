@@ -4,7 +4,7 @@ from collections import OrderedDict
 from botocore.exceptions import ClientError
 import pandas as pd
 
-from .repository.ec2 import Ec2
+from .repository.ec2_repository import Ec2Repository
 
 
 def ip_permissions_formatter(ip_permissions: pd.DataFrame, prefix) -> pd.DataFrame:
@@ -55,13 +55,13 @@ def ip_permissions_formatter(ip_permissions: pd.DataFrame, prefix) -> pd.DataFra
 class SecurityGroupService:
     def get_security_groups(self, region_name: str = None) -> List:
         try:
-            return Ec2(region_name).get_segurity_groups()
+            return Ec2Repository(region_name).get_segurity_groups()
         except ClientError as error:
             exit(error)
 
     def get_regions(self) -> List:
         try:
-            return Ec2().get_regions()
+            return Ec2Repository().get_regions()
         except ClientError as error:
             exit(error)
 

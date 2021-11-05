@@ -3,7 +3,7 @@ from typing import List
 from .base_repository import BaseRepository
 
 
-class Ec2(BaseRepository):
+class Ec2Repository(BaseRepository):
     @property
     def client(self):
         return self.session.client("ec2")
