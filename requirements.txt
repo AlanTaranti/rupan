@@ -1,4 +1,3 @@
 boto3
 fire
 pandas
-openpyxl
