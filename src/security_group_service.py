@@ -70,13 +70,18 @@ class SecurityGroupService:
 
         dataframes = []
         for region in regions:
-            dataframes.append(self.to_pandas_region(region))
+            region_dataframe = self.to_pandas_region(region)
+            if region_dataframe is not None:
+                dataframes.append(region_dataframe)
 
         dataframes = pd.concat(dataframes)
         return dataframes
 
     def to_pandas_region(self, region_name: str = None) -> pd.DataFrame:
         security_groups = self.get_security_groups(region_name)
+
+        if len(security_groups) == 0:
+            return None
 
         dataframes = []
         # tratar os security groups
