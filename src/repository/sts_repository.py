@@ -1,5 +1,3 @@
-from typing import List
-
 from .base_repository import BaseRepository
 
 
