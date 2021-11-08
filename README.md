@@ -45,6 +45,13 @@ Para executar o comando, basta executar o seguinte.
 python3 aws-info-extractor.py security-group
 ```
 
+### AWS IAM Access Keys Extractor
+
+Para executar o comando, basta executar o seguinte.
+```
+python3 aws-info-extractor.py access-keys
+```
+
 ### Ajuda
 
 Caso queira ver a ajuda do comando, basta executar:
