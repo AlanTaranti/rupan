@@ -25,6 +25,4 @@ def aws_sg_extractor():
 
 
 if __name__ == "__main__":
-    fire.Fire({
-        'security-group': aws_sg_extractor
-    })
+    fire.Fire({"security-group": aws_sg_extractor})
