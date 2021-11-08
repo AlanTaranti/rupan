@@ -18,6 +18,7 @@ class AccessKeyService:
                 "Region": "last_used_region",
             }
         )
+        dataframe['never_used'] = dataframe['last_used_date'].isnull()
         return dataframe
 
     def get_access_keys(self):
