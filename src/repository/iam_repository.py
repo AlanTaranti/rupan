@@ -10,6 +10,11 @@ class IamRepository(BaseRepository):
     def resource(self):
         return self.session.resource("iam")
 
+    def get_access_key_last_used(self, access_key):
+        return self.client.get_access_key_last_used(AccessKeyId=access_key)[
+            "AccessKeyLastUsed"
+        ]
+
     def list_users(self):
         return self.resource.users.all()
 
@@ -24,5 +29,11 @@ class IamRepository(BaseRepository):
         for user in users:
             user_keys = self.list_user_access_keys(user.user_name)
             keys.extend(user_keys)
+
+        for key in keys:
+            last_used_data = self.get_access_key_last_used(key["AccessKeyId"])
+            key["LastUsedDate"] = last_used_data.get("LastUsedDate")
+            key["ServiceName"] = last_used_data.get("ServiceName")
+            key["Region"] = last_used_data.get("Region")
 
         return keys
