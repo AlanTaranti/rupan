@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 import pandas as pd
 from botocore.exceptions import ClientError
 
@@ -18,7 +20,13 @@ class AccessKeyService:
                 "Region": "last_used_region",
             }
         )
-        dataframe['never_used'] = dataframe['last_used_date'].isnull()
+        dataframe["never_used"] = dataframe["last_used_date"].isnull()
+
+        one_year_ago = datetime.utcnow().date() - timedelta(days=365)
+        dataframe["last_use_greater_than_one_year"] = (
+            pd.to_datetime(dataframe["last_used_date"]).dt.date < one_year_ago
+        )
+
         return dataframe
 
     def get_access_keys(self):
