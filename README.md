@@ -34,13 +34,16 @@ aws configure
 
 ### Executando
 
-Para executar o script, basta executar o seguinte comando.
+### AWS Security Group Extractor
+
+Para executar o comando, basta executar o seguinte.
 ```
-python3 aws-sg-extractor.py
+python3 aws-info-extractor.py security-group
 ```
 
+### Ajuda
 
 Caso queira ver a ajuda do comando, basta executar:
 ```
-python3 aws-sg-extractor.py --help
+python3 aws-info-extractor.py --help
 ```
