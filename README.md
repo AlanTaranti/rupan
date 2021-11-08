@@ -1,6 +1,6 @@
 # AWS Info Extractor
 
-Extrai as regras dos security groups dos serviços da AWS em formato de planilha
+Extrai informações dos serviços da AWS em formato de planilha
 
 ## Começando
 
