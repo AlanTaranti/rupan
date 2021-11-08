@@ -10,7 +10,11 @@ Estas instruções vão te ajudar a iniciar o projeto.
 
 - [Python 3](https://www.python.org/downloads/)
 - [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
-- Usuario IAM na AWS com acesso programático e com a permissão *AmazonEC2ReadOnlyAccess*, *ReadOnlyAccess* ou permissão equivalente;
+- Permissões
+    - Módulo Security Groups:
+        Usuario IAM na AWS com acesso programático e com a permissão *AmazonEC2ReadOnlyAccess*, *ReadOnlyAccess* ou permissão equivalente;
+    - Módulo Access Keys:
+        Usuario IAM na AWS com acesso programático e com a permissão *IAMReadOnlyAccess*, *ReadOnlyAccess* ou permissão equivalente;
 
 ### Instalando
 
