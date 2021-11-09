@@ -1,3 +1,4 @@
+import logging
 from .base_repository import BaseRepository
 
 
@@ -12,6 +13,20 @@ class S3Repository(BaseRepository):
 
     def list_buckets(self):
         return self.resource.buckets.all()
+
+    def list_buckets_logging(self):
+        buckets = self.list_buckets()
+
+        data = []
+
+        for bucket in buckets:
+            logging = self.client.get_bucket_logging(Bucket=bucket.name)
+
+            data.append(
+                {"Name": bucket.name, "LoggingEnabled": "LoggingEnabled" in logging}
+            )
+
+        return data
 
     def list_buckets_data(self):
         buckets = self.list_buckets()
