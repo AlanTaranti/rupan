@@ -1,4 +1,3 @@
-import logging
 from .base_repository import BaseRepository
 
 
