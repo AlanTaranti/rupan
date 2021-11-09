@@ -6,6 +6,7 @@ from src.aws_account_service import AwsAccountService
 from src.security_group_service import SecurityGroupService
 from src.access_key_service import AccessKeyService
 from src.bucket_service import BucketService
+from src.logging_service import LoggingService
 
 
 def get_filepath(module_name: str):
@@ -66,11 +67,26 @@ def buckets_extractor():
     buckets.to_csv(filepath, index=False)
 
 
+def logging_extractor():
+    """
+    Um simples extrator de estado Logging da AWS
+    """
+    service = LoggingService()
+    logging = service.get_logging()
+
+    # Obter Filepath
+    filepath = get_filepath("logging")
+
+    # Salvar Dados
+    logging.to_csv(filepath, index=False)
+
+
 if __name__ == "__main__":
     fire.Fire(
         {
             "security-group": aws_sg_extractor,
             "access-keys": access_key_extractor,
             "buckets": buckets_extractor,
+            "logging": logging_extractor,
         }
     )
