@@ -6,6 +6,7 @@ from botocore.exceptions import ClientError
 from .repository.sts_repository import StsRepository
 from .repository.s3_repository import S3Repository
 from .repository.cloudfront_repository import CloudfrontRepository
+from .repository.elbv2_repository import ElasticLoadBalancingV2Repository
 
 
 class LoggingService:
@@ -23,6 +24,7 @@ class LoggingService:
         s3_repository = S3Repository()
         sts_repository = StsRepository()
         cloudfront_repository = CloudfrontRepository()
+        elbv2_repository = ElasticLoadBalancingV2Repository()
 
         try:
             buckets_logging = s3_repository.list_buckets_logging()
@@ -34,13 +36,21 @@ class LoggingService:
         except ClientError as error:
             exit(error)
 
+        try:
+            elbv2_logging = elbv2_repository.list_load_balancer_logging()
+        except ClientError as error:
+            exit(error)
+
         buckets_logging = pd.DataFrame(buckets_logging)
         buckets_logging.insert(0, "service", "s3")
 
         cloudfront_logging = pd.DataFrame(cloudfront_logging)
         cloudfront_logging.insert(0, "service", "cloudfront")
 
-        dataframe = pd.concat([buckets_logging, cloudfront_logging])
+        elbv2_logging = pd.DataFrame(elbv2_logging)
+        elbv2_logging.insert(0, "service", "elbv2")
+
+        dataframe = pd.concat([buckets_logging, cloudfront_logging, elbv2_logging])
         account_id = sts_repository.get_account_id()
         dataframe.insert(0, "account_id", account_id)
 
