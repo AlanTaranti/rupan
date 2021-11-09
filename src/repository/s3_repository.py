@@ -35,6 +35,9 @@ class S3Repository(BaseRepository):
 
         for bucket in buckets:
             acls = self.client.get_bucket_acl(Bucket=bucket.name)
+            location = self.client.get_bucket_location(Bucket=bucket.name)[
+                "LocationConstraint"
+            ]
 
             is_public = (
                 len([grant for grant in acls["Grants"] if has_public_access(grant)]) > 0
@@ -42,9 +45,10 @@ class S3Repository(BaseRepository):
 
             data.append(
                 {
-                    "name": bucket.name,
-                    "owner": acls["Owner"]["DisplayName"],
-                    "is_public": is_public,
+                    "Name": bucket.name,
+                    "DisplayName": acls["Owner"]["DisplayName"],
+                    "LocationConstraint": location,
+                    "IsPublic": is_public,
                 }
             )
 
