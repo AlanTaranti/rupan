@@ -9,6 +9,15 @@ from .repository.s3_repository import S3Repository
 
 class BucketService:
     def __format_get_buckets(self, dataframe: pd.DataFrame):
+        dataframe = dataframe.rename(
+            columns={
+                "Name": "name",
+                "DisplayName": "owner",
+                "LocationConstraint": "region",
+                "IsPublic": "is_public",
+            }
+        )
+
         return dataframe
 
     def get_buckets(self):
