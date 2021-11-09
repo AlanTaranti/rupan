@@ -9,6 +9,13 @@ from .repository.s3_repository import S3Repository
 
 class LoggingService:
     def __format_get_logging(self, dataframe: pd.DataFrame):
+        dataframe = dataframe.rename(
+            columns={
+                "Name": "name",
+                "LoggingEnabled": "logging_enabled",
+            }
+        )
+
         return dataframe
 
     def get_logging(self):
