@@ -5,6 +5,7 @@ import fire
 from src.aws_account_service import AwsAccountService
 from src.security_group_service import SecurityGroupService
 from src.access_key_service import AccessKeyService
+from src.bucket_service import BucketService
 
 
 def get_filepath(module_name: str):
@@ -51,10 +52,25 @@ def access_key_extractor():
     access_keys.to_csv(filepath, index=False)
 
 
+def buckets_extractor():
+    """
+    Um simples extrator de Buckets da AWS
+    """
+    service = BucketService()
+    buckets = service.get_buckets()
+
+    # Obter Filepath
+    filepath = get_filepath("buckets")
+
+    # Salvar Dados
+    buckets.to_csv(filepath, index=False)
+
+
 if __name__ == "__main__":
     fire.Fire(
         {
             "security-group": aws_sg_extractor,
             "access-keys": access_key_extractor,
+            "buckets": buckets_extractor,
         }
     )
