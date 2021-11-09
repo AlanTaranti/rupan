@@ -15,6 +15,8 @@ Estas instruções vão te ajudar a iniciar o projeto.
         Usuario IAM na AWS com acesso programático e com a permissão *AmazonEC2ReadOnlyAccess*, *ReadOnlyAccess* ou permissão equivalente;
     - Módulo Access Keys:
         Usuario IAM na AWS com acesso programático e com a permissão *IAMReadOnlyAccess*, *ReadOnlyAccess* ou permissão equivalente;
+    - Módulo Buckets:
+        Usuario IAM na AWS com acesso programático e com a permissão *AmazonS3ReadOnlyAccess*, *ReadOnlyAccess* ou permissão equivalente;
 
 ### Instalando
 
@@ -50,6 +52,13 @@ python3 aws-info-extractor.py security-group
 Para executar o comando, basta executar o seguinte.
 ```
 python3 aws-info-extractor.py access-keys
+```
+
+### AWS Buckets Extractor
+
+Para executar o comando, basta executar o seguinte.
+```
+python3 aws-info-extractor.py buckets
 ```
 
 ### Ajuda
