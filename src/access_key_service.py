@@ -38,6 +38,22 @@ class AccessKeyService:
         except ClientError as error:
             exit(error)
 
+        if len(access_keys) == 0:
+            return pd.DataFrame(
+                columns=[
+                    "account_id",
+                    "username",
+                    "access_key",
+                    "status",
+                    "create_date",
+                    "last_used_date",
+                    "last_used_service_name",
+                    "last_used_region",
+                    "never_used",
+                    "last_use_greater_than_one_year",
+                ]
+            )
+
         access_keys = pd.DataFrame(access_keys)
 
         account_id = sts_repository.get_account_id()
