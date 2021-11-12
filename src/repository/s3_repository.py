@@ -20,12 +20,20 @@ class S3Repository(BaseRepository):
 
         for bucket in buckets:
             logging = self.client.get_bucket_logging(Bucket=bucket.name)
+            location = self.get_bucket_location(bucket.name)
 
             data.append(
-                {"Name": bucket.name, "LoggingEnabled": "LoggingEnabled" in logging}
+                {
+                    "Name": bucket.name,
+                    "LoggingEnabled": "LoggingEnabled" in logging,
+                    "Region": location,
+                }
             )
 
         return data
+
+    def get_bucket_location(self, bucket_name):
+        return self.client.get_bucket_location(Bucket=bucket_name)["LocationConstraint"]
 
     def list_buckets_data(self):
         buckets = self.list_buckets()
@@ -49,9 +57,7 @@ class S3Repository(BaseRepository):
 
         for bucket in buckets:
             acls = self.client.get_bucket_acl(Bucket=bucket.name)
-            location = self.client.get_bucket_location(Bucket=bucket.name)[
-                "LocationConstraint"
-            ]
+            location = self.get_bucket_location(bucket.name)
 
             is_public = (
                 len([grant for grant in acls["Grants"] if has_public_access(grant)]) > 0

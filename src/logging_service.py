@@ -15,6 +15,7 @@ class LoggingService:
         dataframe = dataframe.rename(
             columns={
                 "Name": "name",
+                "Region": "region",
                 "LoggingEnabled": "logging_enabled",
             }
         )

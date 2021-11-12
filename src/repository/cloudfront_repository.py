@@ -27,6 +27,7 @@ class CloudfrontRepository(BaseRepository):
                 {
                     "Name": distribution["Id"],
                     "LoggingEnabled": logging_enabled,
+                    "Region": None,
                 }
             )
 

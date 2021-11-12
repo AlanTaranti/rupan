@@ -33,6 +33,7 @@ class ElasticLoadBalancingRepository(BaseRepository):
                 {
                     "Name": load_balancer["LoadBalancerName"],
                     "LoggingEnabled": logging_enabled,
+                    "Region": None,
                 }
             )
 
