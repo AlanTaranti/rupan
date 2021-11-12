@@ -17,6 +17,8 @@ Estas instruções vão te ajudar a iniciar o projeto.
         Usuario IAM na AWS com acesso programático e com a permissão *IAMReadOnlyAccess*, *ReadOnlyAccess* ou permissão equivalente;
     - Módulo Buckets:
         Usuario IAM na AWS com acesso programático e com a permissão *AmazonS3ReadOnlyAccess*, *ReadOnlyAccess* ou permissão equivalente;
+    - Módulo Logging:
+        Usuario IAM na AWS com acesso programático e com a permissão *AmazonEC2ReadOnlyAccess* + *AmazonS3ReadOnlyAccess* + *CloudFrontReadOnlyAccess*, *ReadOnlyAccess* ou permissão equivalente;
 
 ### Instalando
 
@@ -59,6 +61,13 @@ python3 aws-info-extractor.py access-keys
 Para executar o comando, basta executar o seguinte.
 ```
 python3 aws-info-extractor.py buckets
+```
+
+### AWS Logging Extractor
+
+Para executar o comando, basta executar o seguinte.
+```
+python3 aws-info-extractor.py logging
 ```
 
 ### Ajuda
