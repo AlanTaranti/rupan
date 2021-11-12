@@ -20,6 +20,16 @@ class LoggingService:
             }
         )
 
+        columns = [
+            "account_id",
+            "service",
+            "name",
+            "region",
+            "logging_enabled",
+        ]
+
+        dataframe = dataframe.reindex(columns=columns)
+
         return dataframe
 
     def get_logging(self):
