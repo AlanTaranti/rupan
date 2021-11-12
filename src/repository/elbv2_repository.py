@@ -29,7 +29,7 @@ class ElasticLoadBalancingV2Repository(BaseRepository):
             if len(attributes_filtered) == 0:
                 return False
 
-            return attributes_filtered[0]["Value"]
+            return attributes_filtered[0]["Value"] == "true"
 
         for load_balancer in load_balancers:
             load_balancer_attributes = self.get_load_balancer_attributes(
