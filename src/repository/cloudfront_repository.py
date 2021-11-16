@@ -7,7 +7,10 @@ class CloudfrontRepository(BaseRepository):
         return self.session.client("cloudfront")
 
     def list_distributions(self):
-        return self.client.list_distributions()["DistributionList"]["Items"]
+        distribuicoes = self.client.list_distributions()["DistributionList"]
+        if "Items" in distribuicoes:
+            return distribuicoes["Items"]
+        return []
 
     def get_distribution(self, distribuition_id):
         return self.client.get_distribution(Id=distribuition_id)["Distribution"]
