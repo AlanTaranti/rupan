@@ -93,6 +93,7 @@ class SecurityGroupService:
                     "account_id": security_group.get("OwnerId"),
                     "group_name": security_group.get("GroupName"),
                     "group_id": security_group.get("GroupId"),
+                    "has_resources": security_group.get("HasResources"),
                     "vpc_id": security_group.get("VpcId"),
                     "description": security_group.get("Description"),
                 }
