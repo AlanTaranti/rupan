@@ -94,6 +94,7 @@ class SecurityGroupService:
                     "group_name": security_group.get("GroupName"),
                     "group_id": security_group.get("GroupId"),
                     "has_resources": security_group.get("HasResources"),
+                    "has_internet_gateway": security_group.get("HasInternetGateway"),
                     "vpc_id": security_group.get("VpcId"),
                     "description": security_group.get("Description"),
                 }
