@@ -34,35 +34,10 @@ def ip_permissions_formatter(ip_permissions: pd.DataFrame, prefix) -> pd.DataFra
         }
     )
 
-    def get_service_port_name(row):
-        start_port = (
-            row[columns_dict["from_port"]] if columns_dict["from_port"] in row else None
-        )
-        end_port = (
-            row[columns_dict["to_port"]] if columns_dict["to_port"] in row else None
-        )
-        protocol = (
-            row[columns_dict["ip_protocol"]]
-            if columns_dict["ip_protocol"] in row
-            else None
-        )
-
-        if start_port is None or end_port is None or protocol == -1:
-            return []
-
-        return port_service.get_port_service_name_by_range(
-            start_port, end_port, protocol
-        )
-
-    ip_permissions[columns_dict["service_name_ports"]] = ip_permissions.apply(
-        get_service_port_name, axis=1
-    )
-
     columns = [
         columns_dict["ip_protocol"],
         columns_dict["from_port"],
         columns_dict["to_port"],
-        columns_dict["service_name_ports"],
         columns_dict["ipv4_ranges"],
         columns_dict["ipv6_ranges"],
         columns_dict["prefix_list_ids"],
@@ -77,6 +52,30 @@ def ip_permissions_formatter(ip_permissions: pd.DataFrame, prefix) -> pd.DataFra
     ip_permissions[columns_dict["to_port"]] = ip_permissions[
         columns_dict["to_port"]
     ].astype("Int64")
+
+    def get_service_port_name(row):
+        start_port = (
+            row[columns_dict["from_port"]] if columns_dict["from_port"] in row else None
+        )
+        end_port = (
+            row[columns_dict["to_port"]] if columns_dict["to_port"] in row else None
+        )
+        protocol = (
+            row[columns_dict["ip_protocol"]]
+            if columns_dict["ip_protocol"] in row
+            else None
+        )
+
+        if pd.isna(start_port) or pd.isna(end_port) is None or pd.isna(protocol) or protocol == -1:
+            return []
+
+        return port_service.get_port_service_name_by_range(
+            start_port, end_port, protocol
+        )
+
+    ip_permissions[columns_dict["service_name_ports"]] = ip_permissions.apply(
+        get_service_port_name, axis=1
+    )
 
     return ip_permissions
 
