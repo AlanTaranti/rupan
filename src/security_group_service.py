@@ -34,6 +34,13 @@ def ip_permissions_formatter(ip_permissions: pd.DataFrame, prefix) -> pd.DataFra
         }
     )
 
+    ip_permissions[columns_dict["from_port"]] = ip_permissions[
+        columns_dict["from_port"]
+    ].astype("Int64")
+    ip_permissions[columns_dict["to_port"]] = ip_permissions[
+        columns_dict["to_port"]
+    ].astype("Int64")
+
     def get_service_port_name(row):
         start_port = (
             row[columns_dict["from_port"]] if columns_dict["from_port"] in row else None
@@ -70,13 +77,6 @@ def ip_permissions_formatter(ip_permissions: pd.DataFrame, prefix) -> pd.DataFra
     ]
 
     ip_permissions = ip_permissions.reindex(columns=columns)
-
-    ip_permissions[columns_dict["from_port"]] = ip_permissions[
-        columns_dict["from_port"]
-    ].astype("Int64")
-    ip_permissions[columns_dict["to_port"]] = ip_permissions[
-        columns_dict["to_port"]
-    ].astype("Int64")
 
     return ip_permissions
 
