@@ -32,7 +32,9 @@ class Ec2Repository(BaseRepository):
 
     def get_segurity_groups(self) -> List:
         used_security_groups_ids = self.get_all_ec2_security_groups_ids()
-        security_groups_consolidated = self.client.describe_security_groups()["SecurityGroups"]
+        security_groups_consolidated = self.client.describe_security_groups()[
+            "SecurityGroups"
+        ]
 
         # Has Resources
         security_groups = []
@@ -47,10 +49,10 @@ class Ec2Repository(BaseRepository):
         # VPC With Internet Access
         security_groups = []
         for security_group in security_groups_consolidated:
-            vpc = self.get_vpc(security_group['VpcId'])
+            vpc = self.get_vpc(security_group["VpcId"])
             internet_gateways = vpc.internet_gateways.all()
             internet_gateways_count = sum(1 for _ in internet_gateways)
-            security_group['HasInternetGateway'] = internet_gateways_count > 0
+            security_group["HasInternetGateway"] = internet_gateways_count > 0
             security_groups.append(security_group)
         security_groups_consolidated = security_groups
 
