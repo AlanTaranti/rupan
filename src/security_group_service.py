@@ -5,9 +5,12 @@ from botocore.exceptions import ClientError
 import pandas as pd
 
 from .repository.ec2_repository import Ec2Repository
+from .port_service import PortService
 
 
 def ip_permissions_formatter(ip_permissions: pd.DataFrame, prefix) -> pd.DataFrame:
+    port_service = PortService()
+
     columns_dict = {
         "from_port": "{}_from_port".format(prefix),
         "ip_protocol": "{}_ip_protocol".format(prefix),
@@ -16,6 +19,7 @@ def ip_permissions_formatter(ip_permissions: pd.DataFrame, prefix) -> pd.DataFra
         "prefix_list_ids": "{}_prefix_list_ids".format(prefix),
         "to_port": "{}_to_port".format(prefix),
         "user_id_group_pairs": "{}_user_id_group_pairs".format(prefix),
+        "service_name_ports": "{}_service_name_ports".format(prefix),
     }
 
     ip_permissions = ip_permissions.rename(
@@ -30,10 +34,35 @@ def ip_permissions_formatter(ip_permissions: pd.DataFrame, prefix) -> pd.DataFra
         }
     )
 
+    def get_service_port_name(row):
+        start_port = (
+            row[columns_dict["from_port"]] if columns_dict["from_port"] in row else None
+        )
+        end_port = (
+            row[columns_dict["to_port"]] if columns_dict["to_port"] in row else None
+        )
+        protocol = (
+            row[columns_dict["ip_protocol"]]
+            if columns_dict["ip_protocol"] in row
+            else None
+        )
+
+        if start_port is None or end_port is None or protocol == -1:
+            return []
+
+        return port_service.get_port_service_name_by_range(
+            start_port, end_port, protocol
+        )
+
+    ip_permissions[columns_dict["service_name_ports"]] = ip_permissions.apply(
+        get_service_port_name, axis=1
+    )
+
     columns = [
         columns_dict["ip_protocol"],
         columns_dict["from_port"],
         columns_dict["to_port"],
+        columns_dict["service_name_ports"],
         columns_dict["ipv4_ranges"],
         columns_dict["ipv6_ranges"],
         columns_dict["prefix_list_ids"],
