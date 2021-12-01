@@ -49,7 +49,13 @@ class Ec2Repository(BaseRepository):
         # VPC With Internet Access
         security_groups = []
         for security_group in security_groups_consolidated:
-            vpc = self.get_vpc(security_group["VpcId"])
+            vpc_id = security_group.get("VpcId")
+            if vpc_id is None:
+                security_group["HasInternetGateway"] = False
+                security_groups.append(security_group)
+                continue
+
+            vpc = self.get_vpc(vpc_id)
             internet_gateways = vpc.internet_gateways.all()
             internet_gateways_count = sum(1 for _ in internet_gateways)
             security_group["HasInternetGateway"] = internet_gateways_count > 0
