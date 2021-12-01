@@ -2,12 +2,6 @@ import os
 
 import fire
 
-from src.aws_account_service import AwsAccountService
-from src.security_group_service import SecurityGroupService
-from src.access_key_service import AccessKeyService
-from src.bucket_service import BucketService
-from src.logging_service import LoggingService
-
 
 def get_filepath(module_name: str):
     base_dir = "output"
@@ -17,14 +11,24 @@ def get_filepath(module_name: str):
 
 
 def get_account_id():
+    from src.aws_account_service import AwsAccountService
+
     aws_service = AwsAccountService()
     return aws_service.get_account_id()
 
 
-def aws_sg_extractor():
+def aws_sg_extractor(silent=False, verbose=False):
     """
     Um simples extrator de Security Groups da AWS
     """
+
+    os.environ["AWS_INFO_EXTRACTOR_SILENT"] = str(silent)
+    os.environ["AWS_INFO_EXTRACTOR_VERBOSE"] = str(verbose)
+
+    from src.logger import logger
+    from src.security_group_service import SecurityGroupService
+
+    logger.info("Starting Security Group Module")
 
     # Obter os security groups
     security_group_service = SecurityGroupService()
@@ -36,6 +40,7 @@ def aws_sg_extractor():
     dataframes = security_group_service.to_pandas()
 
     # Salvar Dados
+    logger.info("Saving Data")
     dataframes.to_csv(filepath, index=False)
 
 
@@ -43,6 +48,9 @@ def access_key_extractor():
     """
     Um simples extrator de Access Key da AWS
     """
+
+    from src.access_key_service import AccessKeyService
+
     service = AccessKeyService()
     access_keys = service.get_access_keys()
 
@@ -57,6 +65,8 @@ def buckets_extractor():
     """
     Um simples extrator de Buckets da AWS
     """
+    from src.bucket_service import BucketService
+
     service = BucketService()
     buckets = service.get_buckets()
 
@@ -71,6 +81,8 @@ def logging_extractor():
     """
     Um simples extrator de estado Logging da AWS
     """
+    from src.logging_service import LoggingService
+
     service = LoggingService()
     logging = service.get_logging()
 

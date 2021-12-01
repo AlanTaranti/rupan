@@ -6,6 +6,7 @@ import pandas as pd
 
 from .repository.ec2_repository import Ec2Repository
 from .port_service import PortService
+from .logger import logger
 
 
 def ip_permissions_formatter(ip_permissions: pd.DataFrame, prefix) -> pd.DataFrame:
@@ -66,7 +67,12 @@ def ip_permissions_formatter(ip_permissions: pd.DataFrame, prefix) -> pd.DataFra
             else None
         )
 
-        if pd.isna(start_port) or pd.isna(end_port) is None or pd.isna(protocol) or protocol == -1:
+        if (
+            pd.isna(start_port)
+            or pd.isna(end_port) is None
+            or pd.isna(protocol)
+            or protocol == -1
+        ):
             return []
 
         return port_service.get_port_service_name_by_range(
@@ -97,6 +103,7 @@ class SecurityGroupService:
         regions = self.get_regions()
 
         dataframes = []
+        logger.info("Processing Regions")
         for region in regions:
             region_dataframe = self.to_pandas_region(region)
             if region_dataframe is not None:
