@@ -4,7 +4,7 @@ from .base_repository import BaseRepository
 class ElasticLoadBalancingV2Repository(BaseRepository):
     @property
     def client(self):
-        return self.session.client("elbv2")
+        return self.get_session().client("elbv2")
 
     def list_load_balancers(self):
         return self.client.describe_load_balancers()["LoadBalancers"]

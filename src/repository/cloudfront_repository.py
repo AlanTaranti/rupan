@@ -4,7 +4,7 @@ from .base_repository import BaseRepository
 class CloudfrontRepository(BaseRepository):
     @property
     def client(self):
-        return self.session.client("cloudfront")
+        return self.get_session().client("cloudfront")
 
     def list_distributions(self):
         distribuicoes = self.client.list_distributions()["DistributionList"]

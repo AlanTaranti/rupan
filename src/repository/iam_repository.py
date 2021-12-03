@@ -4,11 +4,11 @@ from .base_repository import BaseRepository
 class IamRepository(BaseRepository):
     @property
     def client(self):
-        return self.session.client("iam")
+        return self.get_session().client("iam")
 
     @property
     def resource(self):
-        return self.session.resource("iam")
+        return self.get_session().resource("iam")
 
     def get_access_key_last_used(self, access_key):
         return self.client.get_access_key_last_used(AccessKeyId=access_key)[

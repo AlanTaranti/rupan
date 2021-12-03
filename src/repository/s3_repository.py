@@ -4,11 +4,11 @@ from .base_repository import BaseRepository
 class S3Repository(BaseRepository):
     @property
     def client(self):
-        return self.session.client("s3")
+        return self.get_session().client("s3")
 
     @property
     def resource(self):
-        return self.session.resource("s3")
+        return self.get_session().resource("s3")
 
     def list_buckets(self):
         return self.resource.buckets.all()

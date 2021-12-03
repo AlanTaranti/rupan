@@ -7,7 +7,7 @@ from ..logger import logger
 class Ec2Repository(BaseRepository):
     @property
     def client(self):
-        return self.session.client("ec2")
+        return self.get_session().client("ec2")
 
     @property
     def resource(self):
