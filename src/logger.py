@@ -7,8 +7,8 @@ logging.basicConfig(
 
 logger = logging.getLogger("logger")
 
-silent = os.environ["AWS_INFO_EXTRACTOR_SILENT"].lower() == 'true'
-verbose = os.environ["AWS_INFO_EXTRACTOR_VERBOSE"].lower() == 'true'
+silent = os.environ["AWS_INFO_EXTRACTOR_SILENT"].lower() == "true"
+verbose = os.environ["AWS_INFO_EXTRACTOR_VERBOSE"].lower() == "true"
 
 log_level = logging.INFO
 if silent:
