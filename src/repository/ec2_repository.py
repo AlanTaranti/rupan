@@ -11,7 +11,7 @@ class Ec2Repository(BaseRepository):
 
     @property
     def resource(self):
-        return self.session.resource("ec2")
+        return self.get_session().resource("ec2")
 
     def get_all_ec2_instances(self):
         return self.resource.instances.all()
