@@ -5,16 +5,14 @@ from ..logger import logger
 
 
 class Ec2Repository(BaseRepository):
-    @property
-    def client(self):
+    def get_client(self):
         return self.get_session().client("ec2")
 
-    @property
-    def resource(self):
+    def get_resource(self):
         return self.get_session().resource("ec2")
 
     def get_all_ec2_instances(self):
-        return self.resource.instances.all()
+        return self.get_resource().instances.all()
 
     def get_all_ec2_security_groups_ids(self):
         logger.debug("Getting EC2 Instances from {}".format(self.region_name))
@@ -31,12 +29,12 @@ class Ec2Repository(BaseRepository):
 
     def get_vpc(self, id: str):
         logger.debug("Getting VPC {}".format(id))
-        return self.resource.Vpc(id)
+        return self.get_resource().Vpc(id)
 
     def get_segurity_groups(self) -> List:
         logger.debug("Getting Security Groups from {}".format(self.region_name))
         used_security_groups_ids = self.get_all_ec2_security_groups_ids()
-        security_groups_consolidated = self.client.describe_security_groups()[
+        security_groups_consolidated = self.get_client().describe_security_groups()[
             "SecurityGroups"
         ]
 
@@ -70,6 +68,6 @@ class Ec2Repository(BaseRepository):
 
     def get_regions(self):
         logger.info("Getting Regions")
-        regions_dict_list = self.client.describe_regions()["Regions"]
+        regions_dict_list = self.get_client().describe_regions()["Regions"]
         regions = [region["RegionName"] for region in regions_dict_list]
         return regions
