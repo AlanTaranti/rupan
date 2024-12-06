@@ -1,78 +1,51 @@
-# AWS Info Extractor
+# Rupan
 
-Extrai informações dos serviços da AWS em formato de planilha
+Rupan is a tool that helps you to extract information from your AWS account.
 
-## Começando
+## Starting
 
-Estas instruções vão te ajudar a iniciar o projeto.
+These instructions will help you start the project.
 
-### Pre-requisitos
+### Prerequisites
 
 - [Python 3](https://www.python.org/downloads/)
 - [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
-- Permissões
-    - Módulo Security Groups:
-        Usuario IAM na AWS com acesso programático e com a permissão *AmazonEC2ReadOnlyAccess*, *ReadOnlyAccess* ou permissão equivalente;
-    - Módulo Access Keys:
-        Usuario IAM na AWS com acesso programático e com a permissão *IAMReadOnlyAccess*, *ReadOnlyAccess* ou permissão equivalente;
-    - Módulo Buckets:
-        Usuario IAM na AWS com acesso programático e com a permissão *AmazonS3ReadOnlyAccess*, *ReadOnlyAccess* ou permissão equivalente;
-    - Módulo Logging:
-        Usuario IAM na AWS com acesso programático e com a permissão *AmazonEC2ReadOnlyAccess* + *AmazonS3ReadOnlyAccess* + *CloudFrontReadOnlyAccess*, *ReadOnlyAccess* ou permissão equivalente;
 
-### Instalando
+### Installing
 
 ```
 pip install -r requirements.txt
 ```
 
-### Configuração
-Com o AWS CLI instalado, podemos seguir com a configuração.
+### Configuration
 
-Nesse passo, é necessário configurar o usuário IAM que será utilizado pela aplicação.
-Tenha em mãos o AWS ACCESS KEY e o AWS SECRET KEY do usuário.
+With the AWS CLI installed, we can proceed with the configuration.
 
-#### Adicionar o profile
+In this step, it is necessary to configure the IAM user that will be used by the application.
+Make sure you have the AWS ACCESS KEY and AWS SECRET KEY of the user.
 
-Você pode adicionar o profile com o comando abaixo.
+#### Add the profile
+
+You can add the profile with the command below.
 
 ```
 aws configure
 ```
 
-### Executando
+### Executing
 
-### AWS Security Group Extractor
+### Unused Lambda Functions
 
-Para executar o comando, basta executar o seguinte.
+To list all unused Lambda functions, run the command below.
+
 ```
-python3 aws-info-extractor.py security-group
-```
-
-### AWS IAM Access Keys Extractor
-
-Para executar o comando, basta executar o seguinte.
-```
-python3 aws-info-extractor.py access-keys
+python3 rupan.py unused-lambda-functions
 ```
 
-### AWS Buckets Extractor
+### Need Help?
 
-Para executar o comando, basta executar o seguinte.
-```
-python3 aws-info-extractor.py buckets
-```
+If you want to see the command help, just run:
 
-### AWS Logging Extractor
-
-Para executar o comando, basta executar o seguinte.
 ```
-python3 aws-info-extractor.py logging
-```
-
-### Ajuda
-
-Caso queira ver a ajuda do comando, basta executar:
-```
-python3 aws-info-extractor.py --help
+python3 rupan.py --help
 ```
